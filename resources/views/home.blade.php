@@ -24,9 +24,10 @@
         <div>
             <p>Group overview</p>
             @foreach($groups as $group)
-                <ul>
-                    <li>{{$group['name']}}</li>
-                </ul>
+                <div>
+                    <!-- per Route verweise ich auf die route mit dem Namen 'groups.showGroup und gebe außerdem auch die GruppenId mit. -->
+                    <a href="{{ route ('groups.showGroup', $group->id)}} ">{{$group['name']}}</a>
+                </div>                
             @endforeach
         </div>
 

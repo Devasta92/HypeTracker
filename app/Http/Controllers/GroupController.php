@@ -26,4 +26,8 @@ class GroupController extends Controller
 
         return redirect('/');
     }
+
+    public function showGroup(Group $group) {
+        return view('group', ['group' => $group]);   
+    }
 }

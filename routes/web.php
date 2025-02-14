@@ -29,8 +29,19 @@ Route::post('/login', [UserController::class, 'login']);
 
 
 // Group related routes
+// Route::get('groups/{group}', [GroupController::class, 'show'])-name('groups.show');
+Route::get('groups/{group}', [GroupController::class, 'showGroup'])->name('groups.showGroup');
 Route::post('/createGroup', [GroupController::class, 'createGroup']);
 
+// Post related routes
+Route::post('/groups/{group}/createPost', [PostController::class, 'createPost']);
+
+
+# Stehen geblieben bei folgendem: Ich will die Funktion schreiben, dass man in einer Gruppe einen Post erstellen kann, welcher dem User und der Gruppe in 
+# der er verfasst wird, zugeordnet wird. Problem: Keine Ahnung wie ich an die GruppenInfos komme oder auch nur die Gruppeninformationen anzeige
+# Nächsten Schritte: Es hinbekommen, dass man von der Homepage aus mit Klick auf eine Gruppe die group.blade.php angezeigt bekommt.
+# Hierbei sollten die infos der entsprechenden Gruppe abrufbar sein. Damit bspw. Titel und description passen.
+# Siehe: https://laravel.com/docs/11.x/routing#route-model-binding
 
 
 

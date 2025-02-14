@@ -12,7 +12,13 @@
             <button>Log out</button>
         </form>
         <div>
-            
+            <form action="/groups/createPost" method="POST">
+                <input name="postTitle" type="text" placeholder="title">
+                <input name="postDescription" type="text" placeholder="description">
+                <label for="image">Choose an image</label>
+                <input name="postImage" type="file" id="image">
+                <button>Create post</button>
+            </form>
         </div>   
     @endauth
 </body>
