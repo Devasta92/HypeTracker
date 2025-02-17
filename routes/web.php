@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use App\Models\Group;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ProfileController;
@@ -32,9 +33,16 @@ Route::post('/login', [UserController::class, 'login']);
 // Route::get('groups/{group}', [GroupController::class, 'show'])-name('groups.show');
 Route::get('groups/{group}', [GroupController::class, 'showGroup'])->name('groups.showGroup');
 Route::post('/createGroup', [GroupController::class, 'createGroup']);
+Route::delete('delete-group/{group}', [GroupController::class, 'deleteGroup']);
 
 // Post related routes
-Route::post('/groups/{group}/createPost', [PostController::class, 'createPost']);
+Route::post('/group/{group}/createPost', [PostController::class, 'createPost']);
+
+// Rumspiel related routes
+// Einfach in resources/views/random/rumspielen und Schabernack machen
+Route::get('rumspielen', function() {
+    return view('random.rumspielen');
+});
 
 
 # Stehen geblieben bei folgendem: Ich will die Funktion schreiben, dass man in einer Gruppe einen Post erstellen kann, welcher dem User und der Gruppe in 

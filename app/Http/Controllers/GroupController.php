@@ -9,11 +9,9 @@ class GroupController extends Controller
 {
     public function createGroup(Request $request) {
 
-        $requests['name'] = $request['groupName'];
-
         // Formulareingaben werden validiert
         $incomingFields = $request->validate([
-            'name' => 'required|unique:groups'
+            'groupName' => 'required'
         ]);
 
         // Eingaben werden entschärft
@@ -27,7 +25,21 @@ class GroupController extends Controller
         return redirect('/');
     }
 
+    // Ist einfach nur der Link
     public function showGroup(Group $group) {
-        return view('group', ['group' => $group]);   
+
+        $posts = $group->posts;
+
+        return view('group', [
+            'group' => $group,
+            'posts' => $posts,
+        ]);   
+    }
+
+    public function deleteGroup(Group $group) {
+        if (auth()->user()->id === $group['user_id']) {
+            $group->delete();
+        }
+        return redirect('/');
     }
 }

@@ -5,7 +5,6 @@
     <title>hypeTracker - Group</title>
 </head>
 <body>
-    <a href="/">hypeTracker</a>
     @auth
         <p>Group View</p>
         <form action="/logout" method="POST">
@@ -23,17 +22,6 @@
                 <button>Create post</button>
             </form>
         </div>   
-        <div>
-            <p>Post overview</p>
-            @foreach($posts as $post)
-                <div>
-                    <!-- per Route verweise ich auf die route mit dem Namen 'groups.showGroup und gebe außerdem auch die GruppenId mit. -->
-                    <div>Always here</div>
-                    <div>{{$post['name']}}</div>
-                    <div style="border-color: black">{{$post['description']}}</div>
-                </div>                
-            @endforeach
-        </div>
     @endauth
 </body>
 </html>

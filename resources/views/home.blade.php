@@ -7,7 +7,7 @@
 <body>
 
     @auth
-        <p>Welcome to WOMBO COM</p>
+        <a href="/">hypeTracker</a>
         <form action="/logout" method="POST">
             @csrf
             <button>Log out</button>
@@ -26,7 +26,14 @@
             @foreach($groups as $group)
                 <div>
                     <!-- per Route verweise ich auf die route mit dem Namen 'groups.showGroup und gebe außerdem auch die GruppenId mit. -->
-                    <a href="{{ route ('groups.showGroup', $group->id)}} ">{{$group['name']}}</a>
+                    <a href="{{ route('groups.showGroup', $group->id)}} ">{{$group['name']}}</a>
+                </div>
+                <div>
+                    <form action="/delete-group/{{$group->id}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button>Delete</button>
+                    </form>
                 </div>                
             @endforeach
         </div>
