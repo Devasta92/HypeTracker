@@ -17,7 +17,7 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->string('imagePath')->nullable();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('group_id')->constrained();
+            $table->foreignId('group_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

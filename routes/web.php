@@ -31,12 +31,16 @@ Route::post('/login', [UserController::class, 'login']);
 
 // Group related routes
 // Route::get('groups/{group}', [GroupController::class, 'show'])-name('groups.show');
-Route::get('groups/{group}', [GroupController::class, 'showGroup'])->name('groups.showGroup');
-Route::post('/createGroup', [GroupController::class, 'createGroup']);
+Route::get('group/{group}', [GroupController::class, 'showGroup'])->name('groups.showGroup');
+Route::post('/create-group', [GroupController::class, 'createGroup']);
 Route::delete('delete-group/{group}', [GroupController::class, 'deleteGroup']);
 
 // Post related routes
-Route::post('/group/{group}/createPost', [PostController::class, 'createPost']);
+Route::post('/group/{group}/create-post', [PostController::class, 'createPost']);
+Route::get('/group/{group}/edit-post/{post}', [PostController::class, 'editPost']);
+Route::put('/group/{group}/edit-post/{post}', [PostController::class, 'savePostChanges']);
+Route::delete('/group/{group}/delete-post/{post}', [PostController::class, 'deletePost']);
+
 
 // Rumspiel related routes
 // Einfach in resources/views/random/rumspielen und Schabernack machen

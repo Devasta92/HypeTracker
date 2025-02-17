@@ -13,10 +13,10 @@
             <button>Log out</button>
         </form>
         <div>
-            <form action="/group/{{ $group->id }}/createPost" method="POST">
+            <form action="/group/{{ $group->id }}/create-post" method="POST">
                 @csrf
                 <input name="postTitle" type="text" placeholder="title">
-                <input name="postDescription" type="text" placeholder="description">
+                <textarea name="postDescription" placeholder="description" cols="25" rows="4"></textarea>
                 <label for="image">Choose an image</label>
                 <input name="postImage" type="file" id="image">
                 <input name='group_id' type="hidden" value="{{$group->id}}">
@@ -28,9 +28,14 @@
             @foreach($posts as $post)
                 <div>
                     <!-- per Route verweise ich auf die route mit dem Namen 'groups.showGroup und gebe außerdem auch die GruppenId mit. -->
-                    <div>Always here</div>
-                    <div>{{$post['name']}}</div>
-                    <div style="border-color: black">{{$post['description']}}</div>
+                    <p>Title: {{$post['title']}}</p>
+                    <p style="border-color: black">Description: {{$post['description']}}</p>
+                    <a href="/group/{{ $post->group_id }}/edit-post/{{ $post->id }}">Edit</a>
+                    <form action="/group/{{ $post->group_id }}/delete-post/{{ $post->id }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button>Delete</button>
+                    </form>
                 </div>                
             @endforeach
         </div>

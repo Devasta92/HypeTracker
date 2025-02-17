@@ -14,7 +14,7 @@
         </form>
 
         <div style="border: 2px solid rgb(68, 3, 3);">
-            <form action="/createGroup" method="POST">
+            <form action="/create-group" method="POST">
                 @csrf
                 <input type="text" name="groupName" placeholder="group name">
                 <button>Create new Group</button>
