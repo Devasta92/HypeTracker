@@ -7,8 +7,15 @@
 </head>
 
 <body>
+    <h1>Coding Play Area</h1>
+    <div>
+    <h2>Part 1</h2>
     <?php
-    
+    echo $_SERVER['PHP_SELF'] . "\n </br>";
+    echo $_SERVER['REQUEST_METHOD'] . "\n </br>";
+    echo $_SERVER['HTTP_HOST'] . "\n </br>";
+    echo $_SERVER['REQUEST_URI'] . "\n </br>";
     ?>
+    </div>
 </body>
 </html>
