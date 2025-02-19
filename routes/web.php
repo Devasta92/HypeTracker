@@ -24,6 +24,9 @@ Route::get('/', function() {
 
 # Um eine route mit einem controller zu erstellen, gibt man erst den "Weg an" (route::post, weil ein formular abgeschickt wurde bswp.), 
 # dann im Array [Controller::class, 'nameDerFunktion'])
+Route::get('/register-window', function() {
+    return view('register-window');
+});
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/login', [UserController::class, 'login']);

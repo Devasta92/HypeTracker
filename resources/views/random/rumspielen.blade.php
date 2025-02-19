@@ -3,10 +3,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>Document</title>
 </head>
 
-<body>
+<body class="bg-pink-200">
     <?php
 
 # Task: https://adventofcode.com/2024/day/1
@@ -1012,13 +1013,13 @@
 48061   21816
 31899   33989';
 
-echo $puzzleInput . "\n";
+// echo $puzzleInput . "\n";
 
-echo strlen($puzzleInput);
+// echo strlen($puzzleInput);
 
-for ($i = 0; $i <= strlen($puzzleInput); $i++) {
+echo 'hello world';
 
-}
+
         
     ?>
 </body>

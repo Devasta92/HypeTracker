@@ -28,47 +28,18 @@
             <a href=/register-window class="text-sm m-0 content-center justify-center">Register</a>
         </div>
         @endguest
-        @auth
-        <div>
-            <form action="/logout" method="POST" class="m-0">
-                @csrf
-                <button class="text-sm">Log out</button>
-            </form>
-        </div>
-        @endauth
     </header>
-
-
-        @auth
-
-
-            <div style="border: 2px solid rgb(68, 3, 3);">
-                <form action="/create-group" method="POST">
-                    @csrf
-                    <input type="text" name="groupName" placeholder="group name">
-                    <button>Create new Group</button>
-                </form>
-            </div>
-
-            <div>
-                <p>Group overview</p>
-                @foreach($groups as $group)
-                    <div>
-                        <!-- per Route verweise ich auf die route mit dem Namen 'groups.showGroup und gebe außerdem auch die GruppenId mit. -->
-                        <a href="{{ route('groups.showGroup', $group->id)}} ">{{$group['name']}}</a>
-                    </div>
-                    <div>
-                        <form action="/delete-group/{{$group->id}}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button>Delete</button>
-                        </form>
-                    </div>                
-                @endforeach
-            </div>
-
-        @else
-        
-        @endauth
+           
+        <!-- Register area -->
+        <div>
+            <!-- Die Action "/register" wird ausgelöst beim klick auf den button in dieser Form. Siehe dann routes /d -->
+            <form action="/register" method="POST" class="grid grid-cols-2 gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center"> 
+                @csrf <!-- ist unbedingt notwendig, um Forms abzuschicken, ist ein Sicherheitsfeature von Laravel (Cross-site request forgery) /d -->
+                <p class="my-2">Username: </p><input name='name' type="text" placeholder="name" class="my-2">
+                <p class="my-2">Email: </p><input name='email' type="text" placeholder="email" class="my-2">
+                <p class="my-2">Password: </p><input name='password' type="password" placeholder="password" class="my-2">
+                <button class="px-2 py-2 bg-gray-700 text-white rounded text-sm">Register</button>
+            </form> 
+        </div>
 </body>
 </html>
