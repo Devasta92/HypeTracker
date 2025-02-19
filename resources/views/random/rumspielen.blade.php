@@ -17,5 +17,21 @@
     echo $_SERVER['REQUEST_URI'] . "\n </br>";
     ?>
     </div>
+    <div>
+    <h2>Part 2</h2>
+    <?php
+    $bar = array(3,2,3,1);
+    $arr = get_defined_vars();
+
+    print_r(array_keys($arr));
+    echo "\n </br> </br> \n"; # le linebreak face
+
+    print_r(array_keys($_SERVER));
+    echo "\n </br> </br> \n"; # le linebreak face
+
+    print_r(array_keys($_GET));
+    echo "\n </br> </br> \n"; # le linebreak face
+    ?>
+    </div>
 </body>
 </html>
