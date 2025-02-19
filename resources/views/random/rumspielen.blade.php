@@ -7,9 +7,10 @@
     <title>Document</title>
 </head>
 
-<body>
+<body class="bg-blue-900">
+<div class="bg-blue-400 p-2 m-auto max-w-7xl min-w-80">
     <h1>Coding Play Area</h1>
-    <div>
+    <div class="p-2 m-auto my-4 min-w-sm max-w-screen-md bg-blue-200">
     <h2>Part 1</h2>
     <?php
     echo $_SERVER['PHP_SELF'] . "\n </br>";
@@ -18,7 +19,7 @@
     echo $_SERVER['REQUEST_URI'] . "\n </br>";
     ?>
     </div>
-    <div>
+    <div class="p-2 m-auto my-4 min-w-sm max-w-screen-md bg-blue-200">
     <h2>Part 2</h2>
     <?php
     $bar = array(3,2,3,1);
@@ -34,13 +35,16 @@
     echo "\n </br> </br> \n"; # le linebreak face
     ?>
     </div>
-    <div>
+    <div class="p-2 m-auto my-4 min-w-sm max-w-screen-md bg-blue-200">
     <h2>Part 3: Puzzle Stuff</h2>
     <?php
     try {
         $datapath = public_path() . "/noobdata/noobinput.txt";
         #$filename = "http://" . $_SERVER['HTTP_ACCEPT'] . $datapath;
         $filedata = file_get_contents($datapath);
+
+        echo "Input Data from file: " . $datapath;
+        echo "\n </br> \n"; # linebreak 1
 
         echo "data length: " . strlen($filedata);
         echo "\n </br> </br> \n"; # linebreak 2
@@ -54,5 +58,6 @@
     }
     ?>
     </div>
+</div>
 </body>
 </html>
