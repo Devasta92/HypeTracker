@@ -52,8 +52,8 @@
             <form action="/create-group" method="POST" class="grid grid-cols-2 gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center"> 
                 @csrf {{-- ist unbedingt notwendig, um Forms abzuschicken, ist ein Sicherheitsfeature von Laravel (Cross-site request forgery) /d --}}
                 <p class="col-span-2 text-center font-bold text-2xl">CREATE NEW GROUP</p>
-                <p class="my-2">Group name: </p><input name='groupName' type="text" placeholder="group name" class="my-2">
-                <button class="px-2 py-2 bg-gray-700 text-white rounded text-sm col-span-2 text-center">Create new Group!</button>
+                <p class="my-2 font-bold">Group name: </p><input name='groupName' type="text" placeholder="name" class="my-2">
+                <button class="px-2 py-2 bg-gray-700 text-white rounded text-sm col-span-2 text-center hover:bg-gray-500">Create new Group!</button>
             </form> 
         </div>
     @endauth
@@ -61,22 +61,25 @@
 
     {{-- GROUP OVERVIEW START --}}
     @auth
-        <div>
-            <h1 class="text-3xl">Group overview</h1>
+        <div class="grid grid-cols-2 gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center">
+            <p class="text-2xl font-bold text-center col-span-2">YOUR GROUPS</p>
             @foreach($groups as $group)
-                <div>
-                    {{-- per Route verweise ich auf die route mit dem Namen 'groups.showGroup und gebe außerdem auch die GruppenId mit. --}}
-                    <a class="hover:text-pink-800 font-bold text-xl" href="{{ route('groups.showGroup', $group->id)}} ">{{$group['name']}}</a>
+                <div class="relative rounded gap-1 max-w-lg bg-gray-400 my-2 py-2 px-2 hover:bg-pink-400">
+                    <a href="{{ route('groups.showGroup', $group->id)}} " class="absolute inset-0"></a>
+                    <div>
+                        {{-- per Route verweise ich auf die route mit dem Namen 'groups.showGroup und gebe außerdem auch die GruppenId mit. --}}
+                        <p class="hover:text-pink-800 font-bold text-xl text-center">{{$group['name']}}</p>
+                    </div>                    
                 </div>
-                <div>
+             {{--<div>
                     <form action="/delete-group/{{$group->id}}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button class="hover:text-red-600 hover:font-bold">Delete</button>
                     </form>
-                </div>                
+                </div> --}}                
             @endforeach
-        </div>
+        </div>    
     @endauth
     {{-- GROUP OVERVIEW END --}}
 

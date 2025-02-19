@@ -51,9 +51,9 @@
         <form action="/register" method="POST" class="grid grid-cols-2 gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center"> 
             @csrf {{-- ist unbedingt notwendig, um Forms abzuschicken, ist ein Sicherheitsfeature von Laravel (Cross-site request forgery) /d --}}
             <p class="col-span-2 text-center font-bold text-2xl">Register</p>
-            <p class="my-2">Username: </p><input name='name' type="text" placeholder="name" class="my-2">
-            <p class="my-2">Email: </p><input name='email' type="text" placeholder="email" class="my-2">
-            <p class="my-2">Password: </p><input name='password' type="password" placeholder="password" class="my-2">
+            <p class="my-2 font-bold">Username: </p><input name='name' type="text" placeholder="name" class="my-2">
+            <p class="my-2 font-bold">Email: </p><input name='email' type="text" placeholder="email" class="my-2">
+            <p class="my-2 font-bold">Password: </p><input name='password' type="password" placeholder="password" class="my-2">
             <button class="px-2 py-2 bg-pink-500 text-white rounded text-sm col-span-2 text-center">Register now!</button>
         </form> 
     </div>

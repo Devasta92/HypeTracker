@@ -27,7 +27,7 @@
                     <input name="loginpassword" type="password" placeholder="password" class="px-2 py-2 rounded bg-gray-800 text-white border border-gray-700">
                     <button class="px-2 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 text-sm">Sign in</button>
                 </form> 
-                <a href=/register-window class="text-sm m-0 content-center justify-center">Register</a>
+                <a href=/registerx class="text-sm m-0 content-center justify-center">Register</a>
             </div>
         @endguest
         {{-- LOGIN FORMULAR END --}}

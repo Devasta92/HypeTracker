@@ -10,6 +10,10 @@ class UserController extends Controller
 #controller erstellt mit 'php artisan make:controller UserController', im Controller werden Funktionen für den User gesammelt
 
 {
+    public function showRegistrationWindow() {
+        return view('registration');
+    }
+
     public function register(Request $request) { # (Request $request) speichert automatisch die Werte, welche mitgegeben werden in der Funktion in $request
         
         # Die Daten werden validiert und als assoziatives Array in $incomingFields gespeichert

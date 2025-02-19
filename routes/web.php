@@ -15,7 +15,7 @@ Route::get('/', function() {
     // $groups = Group::where('user_id', auth()->id())->get();
     $groups = [];
     if(auth()->check()) {
-        $groups = auth()->user()->groups()->latest()->get();
+        $groups = auth()->user()->createdGroups()->latest()->get();
     }
 
     // die Daten im Array können durch ein blade template genutzt werden
@@ -24,12 +24,13 @@ Route::get('/', function() {
 
 # Um eine route mit einem controller zu erstellen, gibt man erst den "Weg an" (route::post, weil ein formular abgeschickt wurde bswp.), 
 # dann im Array [Controller::class, 'nameDerFunktion'])
-Route::get('/register-window', function() {
-    return view('register-window');
-});
-Route::post('/register', [UserController::class, 'register']);
 Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/login', [UserController::class, 'login']);
+Route::get('/register', [UserController::class, 'showRegistrationWindow']);
+Route::post('/register', [UserController::class, 'register']);
+Route::get('/profile', function() {
+    return view('profile');
+});
 
 
 // Group related routes

@@ -46,7 +46,11 @@ class User extends Authenticatable
         ];
     }
 
-    public function groups() {
+    public function createdGroups() {
         return $this->hasMany(Group::class, 'user_id');
+    }
+
+    public function memberOfGroups() {
+        return $this->belongsToMany(Group::class);
     }
 }

@@ -6,6 +6,7 @@
     <title>hypeTracker - Group</title>
 </head>
 <body class="bg-pink-200 font-mono">
+    
     {{-- HEADER ELEMENT START --}}
     <header class="flex justify-between items-center px-8 py-2 text-2xl bg-gray-900 text-white">
         {{-- NAVIGATION LINKS HOME/GROUPS START --}}
@@ -51,9 +52,9 @@
                 <form action="/group/{{ $group->id }}/create-post" method="POST" class="grid grid-cols-2 gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center"> 
                     @csrf {{-- ist unbedingt notwendig, um Forms abzuschicken, ist ein Sicherheitsfeature von Laravel (Cross-site request forgery) /d --}}
                     <p class="col-span-2 text-center font-bold text-2xl">CREATE NEW POST</p>
-                    <p class="my-2">Post title: </p><input name='postTitle' type="text" placeholder="title" class="my-2">
-                    <p class="my-2">Post description: </p><textarea name='postDescription' type="text" placeholder="description" class="my-2" rows="4"></textarea>
-                    <label for="image">Choose an image</label>
+                    <p class="my-2 font-bold">Post title: </p><input name='postTitle' type="text" placeholder="title" class="my-2">
+                    <p class="my-2 font-bold">Post description: </p><textarea name='postDescription' type="text" placeholder="description" class="my-2" rows="4"></textarea>
+                    <label for="image" class="font-bold">Choose an image:</label>
                     <input name="postImage" type="file" id="image">
                     <input name='group_id' type="hidden" value="{{$group->id}}">
                     <button class="px-2 py-2 bg-gray-700 text-white rounded text-sm col-span-2 text-center">Create new post!</button>

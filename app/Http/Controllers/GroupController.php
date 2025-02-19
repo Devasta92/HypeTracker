@@ -20,9 +20,13 @@ class GroupController extends Controller
         // als userId wird der eingeloggte User übergeben
         $incomingFields['user_id'] = auth()->id();
         
-        Group::create($incomingFields);
+        // Gruppe wird erstellt und der neu angelegte Eintrag wird in der Variable $group angelegt.
+        $group = Group::create($incomingFields);
 
-        return redirect('/');
+        // Die Beziehung, dass der Ersteller auch ein Member der Gruppe ist wird hergestellt.
+        $group->members()->attach(auth()->id());
+
+        return redirect('/group-overview');
     }
 
     // Ist einfach nur der Link
@@ -42,7 +46,7 @@ class GroupController extends Controller
 
         // Wenn der User angemeldet ist, dann wird nach dem user gecheckt, die methode groups() ausgeführt (selbst erstellt) und dann noch sortiert nach dem neusten Eintrag.
         if(auth()->check()) {
-            $groups = auth()->user()->groups()->latest()->get();
+            $groups = auth()->user()->memberOfGroups()->latest()->get();
         }
 
         // die Daten im Array können durch ein blade template genutzt werden
