@@ -33,5 +33,25 @@
     echo "\n </br> </br> \n"; # le linebreak face
     ?>
     </div>
+    <div>
+    <h2>Part 3: Puzzle Stuff</h2>
+    <?php
+    try {
+        $datapath = public_path() . "/noobdata/noobinput.txt";
+        #$filename = "http://" . $_SERVER['HTTP_ACCEPT'] . $datapath;
+        $filedata = file_get_contents($datapath);
+
+        echo "data length: " . strlen($filedata);
+        echo "\n </br> </br> \n"; # linebreak 2
+
+        echo "data length: " . strlen($filedata);
+        echo "\n </br> </br> \n"; # linebreak 2
+
+    } catch (Exception $e) {
+        echo "ERROR OCCURRED: ". $e->getMessage() ."";
+        echo "\n </br> </br> \n"; # linebreak 2
+    }
+    ?>
+    </div>
 </body>
 </html>
