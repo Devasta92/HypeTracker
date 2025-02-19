@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
 
+    public function showPostOverview() {
+        $posts = [];
+
+        
+    }
+
     public function savePostChanges(Group $group, Post $post, Request $request) {
         // Wenn der angemeldete User den Post erstellt hat, wird das edit-post-Fenster geöffnet, sonst abort
         if (auth()->user()->id === $post['user_id']) {

@@ -1,7 +1,8 @@
 <?php
 
-use Inertia\Inertia;
+use App\Models\Post;
 use App\Models\Group;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\PostController;
@@ -9,17 +10,32 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ProfileController;
 
+// Route::get('/', function() {
+    
+//     // Dieser Weg: Alle Gruppen werden durchsucht und geschaut, wo die user_id mit dem eingeloggten User übereinstimmt. Dann wird es in $groups gespeichert und an denn view übergeben
+//     // $groups = Group::where('user_id', auth()->id())->get();
+//     $groups = [];
+//     if(auth()->check()) {
+//         $groups = auth()->user()->createdGroups()->latest()->get();
+//     }
+
+//     // die Daten im Array können durch ein blade template genutzt werden
+//     return view('home', ['groups' => $groups]);
+// });
+
 Route::get('/', function() {
     
     // Dieser Weg: Alle Gruppen werden durchsucht und geschaut, wo die user_id mit dem eingeloggten User übereinstimmt. Dann wird es in $groups gespeichert und an denn view übergeben
     // $groups = Group::where('user_id', auth()->id())->get();
-    $groups = [];
+    $posts = [];
     if(auth()->check()) {
-        $groups = auth()->user()->createdGroups()->latest()->get();
+        $groupIds = auth()->user()->memberOfGroups()->pluck('id');
+
+        $posts = Post::whereIn('group_id', $groupIds)->latest()->get();
     }
 
     // die Daten im Array können durch ein blade template genutzt werden
-    return view('home', ['groups' => $groups]);
+    return view('home', ['posts' => $posts]);
 });
 
 # Um eine route mit einem controller zu erstellen, gibt man erst den "Weg an" (route::post, weil ein formular abgeschickt wurde bswp.), 

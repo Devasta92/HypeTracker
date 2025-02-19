@@ -45,5 +45,26 @@
     </header>
     {{-- HEADER ELEMENT END --}}
 
+            {{-- POST PRESENTATION START --}}
+            <div>
+                @foreach($posts as $post)
+                    <div class="gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center">
+                        <!-- per Route verweise ich auf die route mit dem Namen 'groups.showGroup und gebe außerdem auch die GruppenId mit. -->                    
+                        <p class="font-bold text-3xl text-gray-800">{{$post['title']}}</p>
+                        <p class="font-bold text-lg">{{$post->user->name}}</p>
+                        <p style="border-color: black">{{$post['description']}}</p>
+                        <div class="grid grid-cols-2 mt-4">
+                            <a href="/group/{{ $post->group_id }}/edit-post/{{ $post->id }}" class="hover:text-blue-700">Edit</a>
+                            <form action="/group/{{ $post->group_id }}/delete-post/{{ $post->id }}" class="m-0" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="hover:text-red-500">Delete</button>
+                            </form>
+                        </div>
+                    </div>                
+                @endforeach
+            </div>
+            {{-- POST PRESENTATION END --}}
+
 </body>
 </html>

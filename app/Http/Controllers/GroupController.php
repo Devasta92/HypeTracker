@@ -32,7 +32,7 @@ class GroupController extends Controller
     // Ist einfach nur der Link
     public function showGroup(Group $group) {
 
-        $posts = $group->posts;
+        $posts = $group->posts()->latest()->get();
 
         return view('group', [
             'group' => $group,

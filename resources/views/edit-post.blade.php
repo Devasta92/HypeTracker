@@ -6,26 +6,58 @@
     <title>hypeTracker - Group</title>
 </head>
 <body class="bg-pink-200 font-mono">
-    <header class="flex justify-between">
-        <div class="navbar flex justify-evenly py-3 text-3xl bg-gray-900 text-white">
-            <a href="/">Home</a>
-            <a href="/group-overview">Groups</a>
-            <a href="/profile">Profile</a>
-        </div>
-        <div>
+    {{-- HEADER ELEMENT START --}}
+    <header class="flex justify-between items-center px-8 py-2 text-2xl bg-gray-900 text-white">
+        {{-- NAVIGATION LINKS HOME/GROUPS START --}}
+        <nav class="flex space-x-10">
+            <a href="/" class="hover:text-pink-300">Home</a>
+            @auth
+                <a href="/group-overview" class="hover:text-pink-300">Groups</a>            
+            @endauth
+        </nav>
+        {{-- NAVIGATION LINKS HOME/GROUPS END --}}
 
-        </div>
+        {{-- LOGIN FORMULAR START --}}
+        @guest
+            <div class="flex space-x-4">
+                <form action="/login" method="POST" class="m-0"> 
+                    @csrf
+                    <input name="loginname" type="text" placeholder="name" class="px-2 py-2 rounded bg-gray-800 text-white border border-gray-700">
+                    <input name="loginpassword" type="password" placeholder="password" class="px-2 py-2 rounded bg-gray-800 text-white border border-gray-700">
+                    <button class="px-2 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 text-sm">Sign in</button>
+                </form> 
+                <a href=/register-window class="text-sm m-0 content-center justify-center">Register</a>
+            </div>
+        @endguest
+        {{-- LOGIN FORMULAR END --}}
+        {{-- PROFILE/LOGIN SECTION START --}}
+        @auth
+            <div>                
+                <form action="/logout" method="POST" class="m-0">
+                    @csrf
+                    <a href="/profile" class="text-sm hover:text-pink-300">Profile</a>
+                    <button class="text-sm hover:text-pink-300">Log out</button>
+                </form>
+            </div>
+        @endauth
+        {{-- PROFILE/LOGIN SECTION END --}}
     </header>
+    {{-- HEADER ELEMENT END --}}
 
+    {{-- EDIT POST FORMULAR START --}}
     @auth
-        <p>Edit Post</p>
-        <form action="/group/{{$post->group_id}}/edit-post/{{$post->id}}" method="POST">
-            @csrf
-            @method('PUT')
-            <input type="text" name="title" value="{{$post->title}}">
-            <textarea name="description" cols="30" rows="5">{{$post->description}}</textarea>
-            <button>Save Changes</button>
-        </form>       
+        <div>
+            {{-- Die Action "/register" wird ausgelöst beim klick auf den button in dieser Form. Siehe dann routes /d --}}
+            <form action="/group/{{$post->group_id}}/edit-post/{{$post->id}}" method="POST" class="grid grid-cols-2 gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center"> 
+                @csrf {{-- ist unbedingt notwendig, um Forms abzuschicken, ist ein Sicherheitsfeature von Laravel (Cross-site request forgery) /d --}}
+                @method('PUT')
+                <p class="col-span-2 text-center font-bold text-2xl">EDIT POST</p>
+                <p class="my-2 font-bold">Post title: </p><input name='title' type="text" value="{{$post->title}}" class="my-2">
+                <p class="my-2 font-bold">Post description: </p><textarea name='description' type="text" placeholder="description" class="my-2" rows="5">{{$post->description}}</textarea>
+                <button class="px-2 py-2 bg-gray-700 text-white rounded text-sm col-span-2 text-center">Save changes!</button>
+            </form> 
+        </div>
     @endauth
+    {{-- EDIT POST FORMULAR END --}}  
 </body>
 </html>
