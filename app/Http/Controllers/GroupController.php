@@ -36,6 +36,19 @@ class GroupController extends Controller
         ]);   
     }
 
+    public function showGroupOverview() {
+    // array $groups wird leer initialisiert 
+        $groups = [];
+
+        // Wenn der User angemeldet ist, dann wird nach dem user gecheckt, die methode groups() ausgeführt (selbst erstellt) und dann noch sortiert nach dem neusten Eintrag.
+        if(auth()->check()) {
+            $groups = auth()->user()->groups()->latest()->get();
+        }
+
+        // die Daten im Array können durch ein blade template genutzt werden
+        return view('group-overview', ['groups' => $groups]);
+    }
+
     public function deleteGroup(Group $group) {
         if (auth()->user()->id === $group['user_id']) {
             $group->delete();
