@@ -35,6 +35,7 @@ Route::post('/login', [UserController::class, 'login']);
 // Group related routes
 // Route::get('groups/{group}', [GroupController::class, 'show'])-name('groups.show');
 Route::get('group/{group}', [GroupController::class, 'showGroup'])->name('groups.showGroup');
+Route::get('group-overview', [GroupController::class, 'showGroupOverview']);
 Route::post('/create-group', [GroupController::class, 'createGroup']);
 Route::delete('delete-group/{group}', [GroupController::class, 'deleteGroup']);
 
