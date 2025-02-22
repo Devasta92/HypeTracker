@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Group;
 use Illuminate\Http\Request;
 
@@ -58,5 +59,30 @@ class GroupController extends Controller
             $group->delete();
         }
         return redirect('/');
+    }
+
+    public function inviteToGroup(Request $request, Group $group) {
+        $incomingFields = $request->validate([
+            'username' => 'required',
+            'group_id' => 'required'
+        ]);
+
+        $user = User::where('name', $incomingFields['username'])->first();
+        $group = Group::where('id', $incomingFields['group_id'])->first();
+
+        if ( $user ) {
+            $group->members()->syncWithoutDetaching($user['id']);
+        }        
+
+        return redirect()->route('groups.showGroup', $incomingFields['group_id']);
+    }
+
+    public function deleteUserFromGroup(Group $group, User $user) {
+        // Wenn
+        // OR (auth()->user()->id) === $user['id']) <- Wenn der User sich selbst löschen will -> vielleicht dann auf die Homepage und es geht? Eher Gruppe verlassen button.
+        if ((auth()->user()->id === $group['user_id']) AND ($user['id'] !== $group['user_id'])) {
+            $group->members()->detach($user->id);
+        }
+        return redirect()->route('groups.showGroup', $group['id']);
     }
 }

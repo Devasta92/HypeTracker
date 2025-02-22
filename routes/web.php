@@ -10,19 +10,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ProfileController;
 
-// Route::get('/', function() {
-    
-//     // Dieser Weg: Alle Gruppen werden durchsucht und geschaut, wo die user_id mit dem eingeloggten User übereinstimmt. Dann wird es in $groups gespeichert und an denn view übergeben
-//     // $groups = Group::where('user_id', auth()->id())->get();
-//     $groups = [];
-//     if(auth()->check()) {
-//         $groups = auth()->user()->createdGroups()->latest()->get();
-//     }
-
-//     // die Daten im Array können durch ein blade template genutzt werden
-//     return view('home', ['groups' => $groups]);
-// });
-
 Route::get('/', function() {
     
     // Dieser Weg: Alle Gruppen werden durchsucht und geschaut, wo die user_id mit dem eingeloggten User übereinstimmt. Dann wird es in $groups gespeichert und an denn view übergeben
@@ -40,10 +27,10 @@ Route::get('/', function() {
 
 # Um eine route mit einem controller zu erstellen, gibt man erst den "Weg an" (route::post, weil ein formular abgeschickt wurde bswp.), 
 # dann im Array [Controller::class, 'nameDerFunktion'])
-Route::post('/logout', [UserController::class, 'logout']);
-Route::post('/login', [UserController::class, 'login']);
-Route::get('/register', [UserController::class, 'showRegistrationWindow']);
-Route::post('/register', [UserController::class, 'register']);
+Route::post('/logout', [UserController::class, 'logout'])->name('users.logout');
+Route::post('/login', [UserController::class, 'login'])->name('users.login');
+Route::get('/register', [UserController::class, 'showRegistrationWindow'])->name('users.register.form');
+Route::post('/register', [UserController::class, 'register'])->name('users.register.submit');
 Route::get('/profile', function() {
     return view('profile');
 });
@@ -51,16 +38,20 @@ Route::get('/profile', function() {
 
 // Group related routes
 // Route::get('groups/{group}', [GroupController::class, 'show'])-name('groups.show');
-Route::get('group/{group}', [GroupController::class, 'showGroup'])->name('groups.showGroup');
-Route::get('group-overview', [GroupController::class, 'showGroupOverview']);
-Route::post('/create-group', [GroupController::class, 'createGroup']);
-Route::delete('delete-group/{group}', [GroupController::class, 'deleteGroup']);
+Route::get('group/{group}', [GroupController::class, 'showGroup'])->name('groups.showSingle');
+Route::get('group-overview', [GroupController::class, 'showGroupOverview'])->name('groups.showAll');
+
+Route::post('/create-group', [GroupController::class, 'createGroup'])->name('groups.create');
+Route::delete('delete-group/{group}', [GroupController::class, 'deleteGroup'])->name('groups.delete');
+
+Route::post('/group/{group}/invite-user', [GroupController::class, 'inviteToGroup'])->name('groups.inviteUser');
+Route::delete('/group/{group}/delete-user/{user}', [GroupController::class, 'deleteUserFromGroup'])->name('groups.deleteUser');
 
 // Post related routes
-Route::post('/group/{group}/create-post', [PostController::class, 'createPost']);
-Route::get('/group/{group}/edit-post/{post}', [PostController::class, 'editPost']);
-Route::put('/group/{group}/edit-post/{post}', [PostController::class, 'savePostChanges']);
-Route::delete('/group/{group}/delete-post/{post}', [PostController::class, 'deletePost']);
+Route::post('/group/{group}/create-post', [PostController::class, 'createPost'])->name('posts.create');
+Route::get('/group/{group}/edit-post/{post}', [PostController::class, 'editPost'])->name('posts.edit');
+Route::put('/group/{group}/edit-post/{post}', [PostController::class, 'savePostChanges'])->name('posts.update');
+Route::delete('/group/{group}/delete-post/{post}', [PostController::class, 'deletePost'])->name('posts.delete');
 
 
 // Rumspiel related routes

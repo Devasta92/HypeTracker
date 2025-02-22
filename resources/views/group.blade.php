@@ -45,6 +45,10 @@
     </header>
     {{-- HEADER ELEMENT END --}}
 
+    {{-- GROUP NAME START--}}
+    <div class="flex text-5xl justify-center font-bold my-4">{{ $group->name }}</div>
+    {{-- GROUP NAME END--}}
+
         {{-- POST CREATION FORMULAR SECTION START --}}
         @auth
             <div>
@@ -61,7 +65,21 @@
                 </form> 
             </div>
         @endauth
-        {{-- POST CREATION FORMULAR SECTION END --}}  
+        {{-- POST CREATION FORMULAR SECTION END --}}
+        
+        {{-- USER INVITE FORMULAR START --}}
+        @auth
+            <div>
+                <form action="/group/{{ $group->id }}/invite-user" method="POST" class="grid grid-cols-2 gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center"> 
+                    @csrf {{-- ist unbedingt notwendig, um Forms abzuschicken, ist ein Sicherheitsfeature von Laravel (Cross-site request forgery) /d --}}
+                    <p class="col-span-2 text-center font-bold text-2xl">INVITE USER</p>
+                    <p class="my-2 font-bold">Username: </p><input name='username' type="text" placeholder="username" class="my-2">
+                    <input name='group_id' type="hidden" value="{{$group->id}}">
+                    <button class="px-2 py-2 bg-gray-700 text-white rounded text-sm col-span-2 text-center">Invite user!</button>
+                </form> 
+            </div>
+        @endauth
+        {{-- USER INVITE FORMULAR END --}} 
 
         {{-- POST PRESENTATION START --}}
         <div>
@@ -83,5 +101,24 @@
             @endforeach
         </div>
         {{-- POST PRESENTATION END --}}
+
+        {{-- GROUP MEMBER PRESENTATION START --}}
+        <div>            
+            <div class="gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center">
+                <p class="text-center font-bold text-2xl">LIST OF MEMBERS:</p>
+                @foreach($group->members as $member)
+                <div>
+                    <p class="font-bold text-gray-800">{{ $member->name }}</p>                    
+                    <form action="/group/{{$group->id}}/delete-user/{{ $member->id }}" class="m-0" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="hover:text-red-500 text-xs">Delete</button>
+                    </form>                    
+                </div>
+                @endforeach    
+            </div>            
+        </div>        
+        {{-- GROUP MEMBER PRESENTATION END --}}
+
 </body>
 </html>
