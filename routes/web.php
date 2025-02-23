@@ -1,13 +1,14 @@
 <?php
 
 use App\Models\Post;
-use App\Models\Group;
 use Inertia\Inertia;
+use App\Models\Group;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ProfileController;
 
 Route::get('/', function() {
@@ -73,6 +74,10 @@ Route::post('/posts/create', [PostController::class, 'createPost'])->name('posts
 Route::get('/posts/{post}/edit', [PostController::class, 'editPost'])->name('posts.edit');
 Route::put('/posts/{post}/edit', [PostController::class, 'savePostChanges'])->name('posts.update');
 Route::delete('/posts/{post}/delete', [PostController::class, 'deletePost'])->name('posts.delete');
+Route::post('/posts/{post}/rate', [RatingController::class, 'createRating'])->name('posts.rate');
+
+
+
 
 
 #-------------------------------------------------#

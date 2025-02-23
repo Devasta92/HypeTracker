@@ -53,4 +53,8 @@ class User extends Authenticatable
     public function memberOfGroups() {
         return $this->belongsToMany(Group::class);
     }
+
+    public function ratings() {
+        return $this->hasMany(Rating::class, 'user_id');
+    }
 }

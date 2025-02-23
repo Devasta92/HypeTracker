@@ -51,15 +51,34 @@
                     <article class="gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center">
                         <p class="font-bold text-3xl text-gray-800">{{$post['title']}}</p><div class="text-sm text-gray-500 hover:text-gray-800 text-right"><a href="{{ route('groups.show.single', $post['group_id'])}}">{{$post->group->name}}</a></div>
                         <p class="font-bold text-lg">{{$post->user->name}}</p>
-                        <p style="border-color: black">{{$post['description']}}</p>
-                        <div class="grid grid-cols-2 mt-4">
-                            <a href="/posts/{{ $post->id }}/edit" class="hover:text-blue-700">Edit</a>
-                            <form action="/posts/{{ $post->id }}/delete" class="m-0" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="hover:text-red-500">Delete</button>
-                            </form>
-                        </div>
+                        <p>{{$post['description']}}</p>
+                    <hr class="h-1 bg-pink-300 w-1/2 mx-auto my-3">
+                    <div class="mt-4 bg-gray-200 text-center">    
+                        <p class="font-bold">Aktuelle Bewertung:</p>
+                        <p>{{ $post->avgPostRating() }}</p>
+                    </div>
+                    <hr class="h-1 bg-pink-300 w-1/2 mx-auto my-3">
+                    <div class="mt-4 bg-gray-200 text-center">    
+                        <p class="font-bold">Bewertung abgeben:</p>                    
+                        <form action="/posts/{{ $post->id }}/rate" class="m-0" method="POST">
+                            @csrf
+                            <button name="rating_value" class="hover:bg-red-800 bg-gray-700 text-white w-8" value="1">1</button>
+                            <button name="rating_value" class="hover:bg-red-400 bg-gray-700 text-white w-8" value="2">2</button>
+                            <button name="rating_value" class="hover:bg-orange-400 bg-gray-700 text-white w-8" value="3">3</button>
+                            <button name="rating_value" class="hover:bg-green-400 bg-gray-700 text-white w-8" value="4">4</button>
+                            <button name="rating_value" class="hover:bg-green-700 bg-gray-700 text-white w-8" value="5">5</button>
+                        </form>
+                    </div>
+                    {{-- EDIT/DELETE BUTTONS START --}}
+                    <div class="grid grid-cols-2 mt-4">
+                        <a href="/posts/{{ $post->id }}/edit" class="hover:text-blue-700">Edit</a>
+                        <form action="/posts/{{ $post->id }}/delete" class="m-0" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="hover:text-red-500">Delete</button>
+                        </form>
+                    </div>
+                    {{-- EDIT/DELETE BUTTONS END --}} 
                     </article>                
                 @endforeach
             </div>

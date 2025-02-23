@@ -78,8 +78,6 @@ class GroupController extends Controller
     }
 
     public function deleteUserFromGroup(Group $group, User $user) {
-        // Wenn
-        // OR (auth()->user()->id) === $user['id']) <- Wenn der User sich selbst löschen will -> vielleicht dann auf die Homepage und es geht? Eher Gruppe verlassen button.
         if ((auth()->user()->id === $group['user_id']) AND ($user['id'] !== $group['user_id'])) {
             $group->members()->detach($user->id);
         }

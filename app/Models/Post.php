@@ -15,4 +15,25 @@ class Post extends Model
     public function group() {
         return $this->belongsTo(Group::class);
     }
+
+    public function ratings() {
+        return $this->hasMany(Rating::class, 'post_id');
+    }
+
+    public function avgPostRating() {
+        $result = 'No ratings';
+
+        $count = $this->ratings()
+        ->count();
+
+        if($count) {
+            $sum = $this->ratings()
+            ->sum('rating_value');
+
+            $result = round($sum/$count, 1);
+        }
+
+        return $result;
+    }
+
 }

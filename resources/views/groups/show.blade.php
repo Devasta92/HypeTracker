@@ -57,7 +57,7 @@
             <div>
                 {{-- Die Action "/register" wird ausgelöst beim klick auf den button in dieser Form. Siehe dann routes /d --}}
                 <form action="/posts/create" method="POST" class="grid grid-cols-2 gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center"> 
-                    @csrf {{-- ist unbedingt notwendig, um Forms abzuschicken, ist ein Sicherheitsfeature von Laravel (Cross-site request forgery) /d --}}
+                    @csrf
                     <p class="col-span-2 text-center font-bold text-2xl">CREATE NEW POST</p>
                     <p class="my-2 font-bold">Post title: </p><input name='postTitle' type="text" placeholder="title" class="my-2">
                     <p class="my-2 font-bold">Post description: </p><textarea name='postDescription' type="text" placeholder="description" class="my-2" rows="4"></textarea>
@@ -74,7 +74,7 @@
         @auth
             <div>
                 <form action="/groups/{{ $group->id }}/users" method="POST" class="grid grid-cols-2 gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center"> 
-                    @csrf {{-- ist unbedingt notwendig, um Forms abzuschicken, ist ein Sicherheitsfeature von Laravel (Cross-site request forgery) /d --}}
+                    @csrf
                     <p class="col-span-2 text-center font-bold text-2xl">INVITE USER</p>
                     <p class="my-2 font-bold">Username: </p><input name='username' type="text" placeholder="username" class="my-2">
                     <input name='group_id' type="hidden" value="{{$group->id}}">
@@ -88,10 +88,27 @@
         <div>
             @foreach($posts as $post)
                 <div class="gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center">
-                    <!-- per Route verweise ich auf die route mit dem Namen 'groups.showGroup und gebe außerdem auch die GruppenId mit. -->                    
                     <p class="font-bold text-3xl text-gray-800">{{$post['title']}}</p>
                     <p class="font-bold text-lg">{{$post->user->name}}</p>
-                    <p style="border-color: black">{{$post['description']}}</p>
+                    <p>{{$post['description']}}</p>
+                    <hr class="h-1 bg-pink-300 w-1/2 mx-auto my-3">
+                    <div class="mt-4 bg-gray-200 text-center">    
+                        <p class="font-bold">Aktuelle Bewertung:</p>
+                        <p>{{ $post->avgPostRating() }}</p>
+                    </div>
+                    <hr class="h-1 bg-pink-300 w-1/2 mx-auto my-3">
+                    <div class="mt-4 bg-gray-200 text-center">    
+                        <p class="font-bold">Bewertung abgeben:</p>                    
+                        <form action="/posts/{{ $post->id }}/rate" class="m-0" method="POST">
+                            @csrf
+                            <button name="rating_value" class="hover:bg-red-800 bg-gray-700 text-white w-8" value="1">1</button>
+                            <button name="rating_value" class="hover:bg-red-400 bg-gray-700 text-white w-8" value="2">2</button>
+                            <button name="rating_value" class="hover:bg-orange-400 bg-gray-700 text-white w-8" value="3">3</button>
+                            <button name="rating_value" class="hover:bg-green-400 bg-gray-700 text-white w-8" value="4">4</button>
+                            <button name="rating_value" class="hover:bg-green-700 bg-gray-700 text-white w-8" value="5">5</button>
+                        </form>
+                    </div>
+                    {{-- EDIT/DELETE BUTTONS START --}}
                     <div class="grid grid-cols-2 mt-4">
                         <a href="/posts/{{ $post->id }}/edit" class="hover:text-blue-700">Edit</a>
                         <form action="/posts/{{ $post->id }}/delete" class="m-0" method="POST">
@@ -100,6 +117,7 @@
                             <button class="hover:text-red-500">Delete</button>
                         </form>
                     </div>
+                    {{-- EDIT/DELETE BUTTONS END --}}                    
                 </div>                
             @endforeach
         </div>
