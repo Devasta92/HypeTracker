@@ -36,7 +36,7 @@
             <div>                
                 <form action="/users/logout" method="POST" class="m-0">
                     @csrf
-                    <a href="/users/profile" class="text-sm hover:text-pink-300">Profile</a>
+                    <a href="/users/profile" class="text-sm hover:text-pink-300">{{auth()->user()->name}}</a>
                     <button class="text-sm hover:text-pink-300">Log out</button>
                 </form>
             </div>

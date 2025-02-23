@@ -4,14 +4,46 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 
 #controller erstellt mit 'php artisan make:controller UserController', im Controller werden Funktionen für den User gesammelt
 
 {
+    public function editUser(User $user) {
+        if ( auth()->user()->id === $user['id'] ) {
+            return view('users.edit', ['user' => $user] );
+        }        
+        abort(403, 'Access denied');
+    }
+
+    public function updateUser(Request $request, User $user) {
+
+        // Check: Current password
+        $pwcheck = Hash::check($request['password'], $user['password']);
+
+        if ( auth()->user()->id === $user['id'] && $pwcheck) {
+            $incomingFields = $request->validate([
+                'name' => ['required','min:6','max:16', Rule::unique('users')->ignore($user->id)],
+                'email' => ['required','email', Rule::unique('users')->ignore($user->id)],
+                'newPassword' => ['nullable', 'min:8', 'max:99', 'confirmed'],
+            ]);
+
+            if ( $incomingFields['newPassword'] ) {
+                $incomingFields['password'] = bcrypt($incomingFields['newPassword']);
+            };
+
+            $user->update($incomingFields);
+
+            return redirect('/');            
+        }        
+        abort(403, 'Access denied');
+    }
+
     public function showRegistrationWindow() {
-        return view('registration');
+        return view('users.register');
     }
 
     public function register(Request $request) { # (Request $request) speichert automatisch die Werte, welche mitgegeben werden in der Funktion in $request

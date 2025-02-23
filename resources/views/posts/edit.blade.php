@@ -35,7 +35,7 @@
             <div>                
                 <form action="/users/logout" method="POST" class="m-0">
                     @csrf
-                    <a href="/users/profile" class="text-sm hover:text-pink-300">Profile</a>
+                    <a href="/users/profile" class="text-sm hover:text-pink-300">{{auth()->user()->name}}</a>
                     <button class="text-sm hover:text-pink-300">Log out</button>
                 </form>
             </div>
@@ -47,7 +47,6 @@
     {{-- EDIT POST FORMULAR START --}}
     @auth
         <div>
-            {{-- Die Action "/register" wird ausgelöst beim klick auf den button in dieser Form. Siehe dann routes /d --}}
             <form action="/posts/{{$post->id}}/edit" method="POST" class="grid grid-cols-2 gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center"> 
                 @csrf {{-- ist unbedingt notwendig, um Forms abzuschicken, ist ein Sicherheitsfeature von Laravel (Cross-site request forgery) /d --}}
                 @method('PUT')

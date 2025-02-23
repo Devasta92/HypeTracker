@@ -39,9 +39,9 @@ Route::get('/users/register', [UserController::class, 'showRegistrationWindow'])
 Route::post('/users/register', [UserController::class, 'register'])->name('users.register.submit');
 
 # DYNAMIC ROUTES #
-Route::get('/users/profile/{user}', function() {
-    return view('profile');
-});
+Route::get('/users/{user}/edit', [UserController::class, 'editUser'])->name('users.edit');
+Route::put('/users/{user}/edit', [UserController::class, 'updateUser'])->name('users.update');
+
 
 #----------------------------------------------#
 #------------ GROUP RELATED ROUTES ------------#
