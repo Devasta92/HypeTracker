@@ -22,41 +22,63 @@ Route::get('/', function() {
     }
 
     // die Daten im Array können durch ein blade template genutzt werden
-    return view('home', ['posts' => $posts]);
+    return view('index', ['posts' => $posts]);
 });
+
+#---------------------------------------------#
+#------------ USER RELATED ROUTES ------------#
+#---------------------------------------------#
 
 # Um eine route mit einem controller zu erstellen, gibt man erst den "Weg an" (route::post, weil ein formular abgeschickt wurde bswp.), 
 # dann im Array [Controller::class, 'nameDerFunktion'])
-Route::post('/logout', [UserController::class, 'logout'])->name('users.logout');
-Route::post('/login', [UserController::class, 'login'])->name('users.login');
-Route::get('/register', [UserController::class, 'showRegistrationWindow'])->name('users.register.form');
-Route::post('/register', [UserController::class, 'register'])->name('users.register.submit');
-Route::get('/profile', function() {
+
+# STATIC ROUTES #
+Route::post('/users/logout', [UserController::class, 'logout'])->name('users.logout');
+Route::post('/users/login', [UserController::class, 'login'])->name('users.login');
+Route::get('/users/register', [UserController::class, 'showRegistrationWindow'])->name('users.register.form');
+Route::post('/users/register', [UserController::class, 'register'])->name('users.register.submit');
+
+# DYNAMIC ROUTES #
+Route::get('/users/profile/{user}', function() {
     return view('profile');
 });
 
+#----------------------------------------------#
+#------------ GROUP RELATED ROUTES ------------#
+#----------------------------------------------#
 
-// Group related routes
-// Route::get('groups/{group}', [GroupController::class, 'show'])-name('groups.show');
-Route::get('group/{group}', [GroupController::class, 'showGroup'])->name('groups.showSingle');
-Route::get('group-overview', [GroupController::class, 'showGroupOverview'])->name('groups.showAll');
+# STATIC ROUTES #
+Route::get('/groups/overview', [GroupController::class, 'showGroupOverview'])->name('groups.show.all');
+Route::post('/groups/create', [GroupController::class, 'createGroup'])->name('groups.create');
 
-Route::post('/create-group', [GroupController::class, 'createGroup'])->name('groups.create');
-Route::delete('delete-group/{group}', [GroupController::class, 'deleteGroup'])->name('groups.delete');
-
-Route::post('/group/{group}/invite-user', [GroupController::class, 'inviteToGroup'])->name('groups.inviteUser');
-Route::delete('/group/{group}/delete-user/{user}', [GroupController::class, 'deleteUserFromGroup'])->name('groups.deleteUser');
-
-// Post related routes
-Route::post('/group/{group}/create-post', [PostController::class, 'createPost'])->name('posts.create');
-Route::get('/group/{group}/edit-post/{post}', [PostController::class, 'editPost'])->name('posts.edit');
-Route::put('/group/{group}/edit-post/{post}', [PostController::class, 'savePostChanges'])->name('posts.update');
-Route::delete('/group/{group}/delete-post/{post}', [PostController::class, 'deletePost'])->name('posts.delete');
+# DYNAMIC ROUTES #
+Route::get('/groups/{group}', [GroupController::class, 'showGroup'])->name('groups.show.single');
+Route::delete('/groups/{group}', [GroupController::class, 'deleteGroup'])->name('groups.delete');
+Route::get('/groups/{group}/edit', [GroupController::class, 'editGroup'])->name('groups.edit');
+Route::put('/groups/{group}/edit', [GroupController::class, 'saveGroupChanges'])->name('groups.update');
 
 
-// Rumspiel related routes
+Route::post('/groups/{group}/users', [GroupController::class, 'inviteToGroup'])->name('groups.invite.user');
+Route::delete('/groups/{group}/users/{user}', [GroupController::class, 'deleteUserFromGroup'])->name('groups.delete.user');
+
+#----------------------------------------------#
+#------------ POST RELATED ROUTES -------------#
+#----------------------------------------------#
+
+# STATIC ROUTES #
+Route::post('/posts/create', [PostController::class, 'createPost'])->name('posts.create');
+
+# DYNAMIC ROUTES #
+Route::get('/posts/{post}/edit', [PostController::class, 'editPost'])->name('posts.edit');
+Route::put('/posts/{post}/edit', [PostController::class, 'savePostChanges'])->name('posts.update');
+Route::delete('/posts/{post}/delete', [PostController::class, 'deletePost'])->name('posts.delete');
+
+
+#-------------------------------------------------#
+#------------ RUMSPIEL RELATED ROUTES ------------#
+#-------------------------------------------------#
 // Einfach in resources/views/random/rumspielen und Schabernack machen
-Route::get('rumspielen', function() {
+Route::get('/rumspielen', function() {
     return view('random.rumspielen');
 });
 

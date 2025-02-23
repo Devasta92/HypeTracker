@@ -9,12 +9,6 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
 
-    public function showPostOverview() {
-        $posts = [];
-
-        
-    }
-
     public function savePostChanges(Group $group, Post $post, Request $request) {
         // Wenn der angemeldete User den Post erstellt hat, wird das edit-post-Fenster geöffnet, sonst abort
         if (auth()->user()->id === $post['user_id']) {
@@ -34,7 +28,7 @@ class PostController extends Controller
 
             $post->update($incomingFields);
 
-            return redirect()->route('groups.showGroup', $post['group_id']);
+            return redirect()->route('groups.show.single', $post['group_id']);
         }
 
         return abort(403, "Keine Berechtigung diesen Post zu verändern");
@@ -56,7 +50,7 @@ class PostController extends Controller
         if (auth()->user()->id === $post['user_id']) {
             $post->delete();
         }
-        return redirect()->route('groups.showGroup', $post['group_id']);
+        return redirect()->route('groups.show.single', $post['group_id']);
     }
 
     public function createPost(Request $request) {
@@ -85,6 +79,6 @@ class PostController extends Controller
         
         $post = Post::create($incomingFields);
 
-        return redirect()->route('groups.showGroup', $incomingFields['group_id']);
+        return redirect()->route('groups.show.single', $incomingFields['group_id']);
     }
 }

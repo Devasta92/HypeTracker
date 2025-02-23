@@ -27,7 +27,7 @@ class GroupController extends Controller
         // Die Beziehung, dass der Ersteller auch ein Member der Gruppe ist wird hergestellt.
         $group->members()->attach(auth()->id());
 
-        return redirect('/group-overview');
+        return redirect('/groups/overview');
     }
 
     // Ist einfach nur der Link
@@ -35,7 +35,7 @@ class GroupController extends Controller
 
         $posts = $group->posts()->latest()->get();
 
-        return view('group', [
+        return view('groups.show', [
             'group' => $group,
             'posts' => $posts,
         ]);   
@@ -51,7 +51,7 @@ class GroupController extends Controller
         }
 
         // die Daten im Array können durch ein blade template genutzt werden
-        return view('group-overview', ['groups' => $groups]);
+        return view('groups.overview', ['groups' => $groups]);
     }
 
     public function deleteGroup(Group $group) {
@@ -74,7 +74,7 @@ class GroupController extends Controller
             $group->members()->syncWithoutDetaching($user['id']);
         }        
 
-        return redirect()->route('groups.showGroup', $incomingFields['group_id']);
+        return redirect()->route('groups.show.single', $incomingFields['group_id']);
     }
 
     public function deleteUserFromGroup(Group $group, User $user) {
@@ -83,6 +83,34 @@ class GroupController extends Controller
         if ((auth()->user()->id === $group['user_id']) AND ($user['id'] !== $group['user_id'])) {
             $group->members()->detach($user->id);
         }
-        return redirect()->route('groups.showGroup', $group['id']);
+        return redirect()->route('groups.show.single', $group['id']);
+    }
+
+    public function editGroup(Group $group) {
+        if ($group->members->contains(auth()->user()->id)) {
+            return view('groups.settings', ['group' => $group]);
+        }
+        abort(403, "Access denied");
+    }
+
+    public function saveGroupChanges(Request $request, Group $group) {
+        if($group->members->contains(auth()->user()->id)) {
+            $incomingFields = $request->validate([
+                'name' => 'required',
+                'description' => 'max:200'
+            ]);
+
+            $incomingFields['name'] = strip_tags($request['name']);
+            $incomingFields['description'] = strip_tags($request['description']);
+
+            $group->update($incomingFields);
+            $posts = $group->posts()->latest()->get();
+            
+            return view('groups.show', [
+                'group' => $group,
+                'posts' => $posts,
+                ] );
+        }
+        abort(403, "Access denied");
     }
 }
