@@ -48,7 +48,7 @@
     {{-- GROUP NAME START--}}
     <div class="flex text-5xl justify-center font-bold my-4">
         <div>{{ $group->name }}</div>
-        <a class="text-sm ml-5 hover:text-pink-600" href="{{ route('groups.edit', $group)}}">Settings</a>
+        <a class="text-sm ml-5 hover:text-pink-600" href="{{ route('groups.edit', $group)}}">Edit</a>
     </div>
     {{-- GROUP NAME END--}}
 

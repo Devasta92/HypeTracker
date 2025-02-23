@@ -67,5 +67,18 @@
     @endauth
     {{-- EDIT GROUP FORMULAR END --}}  
 
+        {{-- EDIT GROUP FORMULAR START --}}
+        @auth
+        <div>
+            <form action="/groups/{{$group->id}}/delete" method="POST" class="grid grid-cols-2 gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center"> 
+                @csrf {{-- ist unbedingt notwendig, um Forms abzuschicken, ist ein Sicherheitsfeature von Laravel (Cross-site request forgery) /d --}}
+                @method('DELETE')
+                <p class="col-span-2 text-center font-bold text-2xl">DELETE GROUP</p>
+                <button class="px-2 py-2 bg-red-600 text-white rounded text-sm col-span-2 text-center font-extrabold">DELETE GROUP!</button>
+            </form> 
+        </div>
+        @endauth
+        {{-- EDIT GROUP FORMULAR END --}}  
+
 </body>
 </html>

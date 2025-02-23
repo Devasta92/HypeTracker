@@ -88,7 +88,7 @@ class GroupController extends Controller
 
     public function editGroup(Group $group) {
         if ($group->members->contains(auth()->user()->id)) {
-            return view('groups.settings', ['group' => $group]);
+            return view('groups.edit', ['group' => $group]);
         }
         abort(403, "Access denied");
     }

@@ -53,9 +53,10 @@ Route::post('/groups/create', [GroupController::class, 'createGroup'])->name('gr
 
 # DYNAMIC ROUTES #
 Route::get('/groups/{group}', [GroupController::class, 'showGroup'])->name('groups.show.single');
-Route::delete('/groups/{group}', [GroupController::class, 'deleteGroup'])->name('groups.delete');
 Route::get('/groups/{group}/edit', [GroupController::class, 'editGroup'])->name('groups.edit');
 Route::put('/groups/{group}/edit', [GroupController::class, 'saveGroupChanges'])->name('groups.update');
+Route::delete('/groups/{group}/delete', [GroupController::class, 'deleteGroup'])->name('groups.delete');
+
 
 
 Route::post('/groups/{group}/users', [GroupController::class, 'inviteToGroup'])->name('groups.invite.user');

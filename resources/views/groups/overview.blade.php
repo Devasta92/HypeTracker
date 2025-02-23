@@ -48,8 +48,7 @@
     {{-- GROUP CREATION FORMULAR SECTION START --}}
     @auth
         <div>
-            {{-- Die Action "/register" wird ausgelöst beim klick auf den button in dieser Form. Siehe dann routes /d --}}
-            <form action="groups/create" method="POST" class="grid grid-cols-2 gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center"> 
+            <form action="{{route('groups.create')}}" method="POST" class="grid grid-cols-2 gap-4 max-w-lg w-full mx-auto my-10 bg-gray-200 p-6 rounded shadow-md justify-between align-middle items-center"> 
                 @csrf {{-- ist unbedingt notwendig, um Forms abzuschicken, ist ein Sicherheitsfeature von Laravel (Cross-site request forgery) /d --}}
                 <p class="col-span-2 text-center font-bold text-2xl">CREATE NEW GROUP</p>
                 <p class="my-2 font-bold">Group name: </p><input name='groupName' type="text" placeholder="name" class="my-2">
@@ -68,17 +67,9 @@
                 <div class="relative rounded gap-1 max-w-lg bg-gray-400 my-2 py-2 px-2 hover:bg-pink-400">
                     <a href="{{ route('groups.show.single', $group->id)}} " class="absolute inset-0"></a>
                     <div>
-                        {{-- per Route verweise ich auf die route mit dem Namen 'groups.showGroup und gebe außerdem auch die GruppenId mit. --}}
                         <p class="hover:text-pink-800 font-bold text-xl text-center">{{$group['name']}}</p>
                     </div>                    
                 </div>
-             {{--<div>
-                    <form action="/delete-group/{{$group->id}}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button class="hover:text-red-600 hover:font-bold">Delete</button>
-                    </form>
-                </div> --}}                
             @endforeach
         </div>    
     @endauth
